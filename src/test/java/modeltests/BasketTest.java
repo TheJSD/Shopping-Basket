@@ -41,10 +41,16 @@ public class BasketTest {
         basket.addItems(biscuits, 2);
         assertEquals(Optional.ofNullable(3), Optional.ofNullable(basket.getItems().get(biscuits)));
     }
-//    @Test
-//    public void canRemoveItemsFromBasket(){
-//        basket.addItems(biscuits, 2);
-//        basket.removeItems(biscuits, 2);
-//        assertEquals("", basket.getItems());
-//    }
+    @Test
+    public void addItemsCannotTakeNegativeNumbers(){
+        basket.addItems(biscuits, -2);
+        assertEquals(0, basket.getItems().size());
+    }
+
+    @Test
+    public void canSubtractItemsFromBasket(){
+        basket.addItems(biscuits, 2);
+        basket.subtractItems(biscuits, 2);
+        assertEquals(0, basket.getItems().size());
+    }
 }
