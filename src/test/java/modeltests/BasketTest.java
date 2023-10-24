@@ -53,4 +53,12 @@ public class BasketTest {
         basket.subtractItems(biscuits, 2);
         assertEquals(0, basket.getItems().size());
     }
+
+    @Test
+    public void canClearItemsFromBasket(){
+        basket.addItems(biscuits, 5);
+        basket.addItems(apples, 4);
+        basket.clearItems();
+        assertEquals(0, basket.getItems().size());
+    }
 }

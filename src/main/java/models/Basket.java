@@ -39,4 +39,8 @@ public class Basket {
             this.items.remove(item);
         }
     }
+
+    public void clearItems() {
+        this.items = new HashMap<ShoppingItem, Integer>();
+    }
 }
