@@ -2,6 +2,7 @@ package modeltests;
 
 import models.Basket;
 import models.Discounts.BuyOneGetOne;
+import models.Discounts.MinimumSpendPercentageDiscount;
 import models.ShoppingItem;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +18,7 @@ public class BasketTest {
     ShoppingItem apples;
     BuyOneGetOne buyOneGetOneApples;
     BuyOneGetOne buyOneGetOneBiscuits;
+    MinimumSpendPercentageDiscount minimumSpendPercentageDiscount;
     @Before
     public void before(){
         biscuits = new ShoppingItem("biscuits", 1.99);
@@ -24,6 +26,7 @@ public class BasketTest {
         basket = new Basket();
         buyOneGetOneApples = new BuyOneGetOne(apples);
         buyOneGetOneBiscuits = new BuyOneGetOne(biscuits);
+        minimumSpendPercentageDiscount = new MinimumSpendPercentageDiscount(0.1, 20);
     }
     @Test
     public void basketStartsEmpty(){
@@ -97,5 +100,17 @@ public class BasketTest {
         basket.addDiscount(buyOneGetOneApples);
         basket.addDiscount(buyOneGetOneBiscuits);
         assertEquals(11.93, basket.calculateTotal());
+    }
+    @Test
+    public void canAddMinimumSpendPercentageDiscount(){
+        basket.addDiscount(minimumSpendPercentageDiscount);
+        assertEquals(minimumSpendPercentageDiscount, basket.getPriority2Discount());
+    }
+    @Test
+    public void calculateTotalWorksWithMinimumSpendDiscount(){
+        basket.addItems(apples, 10);
+        basket.addItems(biscuits, 10);
+        basket.addDiscount(minimumSpendPercentageDiscount);
+        assertEquals(31.32, basket.calculateTotal());
     }
 }

@@ -28,7 +28,9 @@ public class MinimumSpendPercentageDiscount implements IDiscountable {
     }
     public double calculateDiscount(double total) {
         if (total >= this.minimumSpend) {
-            return total*discountRate;
+            double discountValue = total*discountRate;
+            double roundedValue = Math.round(discountValue*100)/100D;
+            return roundedValue;
         }
         else return 0;
     }
