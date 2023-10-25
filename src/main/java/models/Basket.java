@@ -1,6 +1,7 @@
 package models;
 
 import models.Discounts.IDiscountable;
+import models.Discounts.LoyaltyCard;
 import models.Discounts.MinimumSpendPercentageDiscount;
 
 import java.util.ArrayList;
@@ -12,11 +13,13 @@ public class Basket {
     private ArrayList<IDiscountable> priority1Discounts;
 
     private MinimumSpendPercentageDiscount priority2Discount;
+    private LoyaltyCard loyaltyCard;
 
     public Basket() {
         this.items = new HashMap<ShoppingItem, Integer>();
         this.priority1Discounts = new ArrayList<IDiscountable>();
         this.priority2Discount = null;
+        this.loyaltyCard = null;
     }
 
     public HashMap<ShoppingItem, Integer> getItems() {
@@ -62,6 +65,10 @@ public class Basket {
         return priority1Discounts;
     }
 
+    public LoyaltyCard getLoyaltyCard() {
+        return loyaltyCard;
+    }
+
     public void addDiscount(IDiscountable discountToAdd) {
         int priority = discountToAdd.getPriority();
         if (priority == 1) {
@@ -79,6 +86,8 @@ public class Basket {
             if (existingDiscount == null || existingDiscount.getDiscountRate() < newDiscount.getDiscountRate()) {
                 this.priority2Discount = newDiscount;
             }
+        } else if (priority == 3) {
+            this.loyaltyCard = (LoyaltyCard) discountToAdd;
         }
     }
 
@@ -98,6 +107,10 @@ public class Basket {
         }
         if (this.priority2Discount != null) {
             double discountValue = this.priority2Discount.calculateDiscount(runningTotal);
+            runningTotal -= discountValue;
+        }
+        if (this.loyaltyCard != null) {
+            double discountValue = this.loyaltyCard.calculateDiscount(runningTotal);
             runningTotal -= discountValue;
         }
         return (Math.round(runningTotal*100))/100D;

@@ -3,8 +3,6 @@ package models.Discounts;
 import models.ShoppingItem;
 
 import java.util.HashMap;
-import java.util.Optional;
-import java.util.OptionalInt;
 
 public class BuyOneGetOne implements IDiscountable {
     private ShoppingItem discountedItem;

@@ -2,6 +2,7 @@ package modeltests;
 
 import models.Basket;
 import models.Discounts.BuyOneGetOne;
+import models.Discounts.LoyaltyCard;
 import models.Discounts.MinimumSpendPercentageDiscount;
 import models.ShoppingItem;
 import org.junit.Before;
@@ -117,5 +118,17 @@ public class BasketTest {
         basket.addItems(biscuits, 10);
         basket.addDiscount(minimumSpendPercentageDiscount);
         assertEquals(31.32, basket.calculateTotal());
+    }
+    @Test
+    public void canAddLoyaltyCard(){
+        LoyaltyCard loyaltyCard = new LoyaltyCard("Bob");
+        basket.addDiscount(loyaltyCard);
+        assertEquals(loyaltyCard, basket.getLoyaltyCard());
+    }
+    @Test
+    public void canCalculateTotalWithLoyaltyCard(){
+        basket.addItems(apples, 100);
+        basket.addDiscount(new LoyaltyCard("Bob"));
+        assertEquals(146.02, basket.calculateTotal());
     }
 }
