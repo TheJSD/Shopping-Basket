@@ -102,12 +102,17 @@ public class BasketTest {
         assertEquals(11.93, basket.calculateTotal());
     }
     @Test
+    public void priority2DiscountStartsNull(){
+        assertEquals(null, basket.getPriority2Discount());
+    }
+
+    @Test
     public void canAddMinimumSpendPercentageDiscount(){
         basket.addDiscount(minimumSpendPercentageDiscount);
         assertEquals(minimumSpendPercentageDiscount, basket.getPriority2Discount());
     }
     @Test
-    public void calculateTotalWorksWithMinimumSpendDiscount(){
+    public void canCalculateTotalWithMinimumSpendDiscount(){
         basket.addItems(apples, 10);
         basket.addItems(biscuits, 10);
         basket.addDiscount(minimumSpendPercentageDiscount);

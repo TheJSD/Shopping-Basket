@@ -1,6 +1,7 @@
 package models;
 
 import models.Discounts.IDiscountable;
+import models.Discounts.MinimumSpendPercentageDiscount;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,9 +11,12 @@ public class Basket {
     private HashMap<ShoppingItem, Integer> items;
     private ArrayList<IDiscountable> priority1Discounts;
 
+    private MinimumSpendPercentageDiscount priority2Discount;
+
     public Basket() {
         this.items = new HashMap<ShoppingItem, Integer>();
         this.priority1Discounts = new ArrayList<IDiscountable>();
+        this.priority2Discount = null;
     }
 
     public HashMap<ShoppingItem, Integer> getItems() {
@@ -50,6 +54,10 @@ public class Basket {
         this.items = new HashMap<ShoppingItem, Integer>();
     }
 
+    public IDiscountable getPriority2Discount() {
+        return this.priority2Discount;
+    }
+
     public ArrayList<IDiscountable> getPriority1Discounts() {
         return priority1Discounts;
     }
@@ -65,8 +73,15 @@ public class Basket {
                 }
             }
             else this.priority1Discounts.add(discountToAdd);
+        } else if (priority == 2) {
+            MinimumSpendPercentageDiscount newDiscount = (MinimumSpendPercentageDiscount) discountToAdd;
+            MinimumSpendPercentageDiscount existingDiscount = this.priority2Discount;
+            if (existingDiscount == null || existingDiscount.getDiscountRate() < newDiscount.getDiscountRate()) {
+                this.priority2Discount = newDiscount;
+            }
         }
     }
+
     public double calculateTotal() {
         double runningTotal = 0;
         for (Map.Entry<ShoppingItem, Integer> entry : this.items.entrySet()) {
@@ -81,6 +96,10 @@ public class Basket {
             }
             runningTotal -= priority1DiscountValue;
         }
-        return runningTotal;
+        if (this.priority2Discount != null) {
+            double discountValue = this.priority2Discount.calculateDiscount(runningTotal);
+            runningTotal -= discountValue;
+        }
+        return (Math.round(runningTotal*100))/100D;
     }
 }
