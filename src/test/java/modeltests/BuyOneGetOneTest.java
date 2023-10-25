@@ -21,6 +21,16 @@ public class BuyOneGetOneTest {
     }
 
     @Test
+    public void hasAPriorityOf1() {
+        assertEquals(2, buyOneGetOne.getPriority());
+    }
+
+    @Test
+    public void canGetDiscountedItem(){
+        assertEquals(biscuits, buyOneGetOne.getDiscountedItem());
+    }
+
+    @Test
     public void canGetDiscount() {
         basket.addItems(apples, 4);
         HashMap<ShoppingItem, Integer>basketItems = basket.getItems();
