@@ -35,7 +35,7 @@ public class Basket {
         }
         int oldTotal = this.items.get(item);
         this.items.put(item, oldTotal -= amount);
-        if (this.items.get(item) == 0) {
+        if (this.items.get(item) <= 0) {
             this.items.remove(item);
         }
     }
