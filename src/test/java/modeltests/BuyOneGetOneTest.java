@@ -34,7 +34,7 @@ public class BuyOneGetOneTest {
     }
 
     @Test
-    public void canGetDiscount() {
+    public void canCalculateDiscount() {
         basket.addItems(apples, 4);
         HashMap<ShoppingItem, Integer>basketItems = basket.getItems();
         assertEquals(2.98, buyOneGetOne.calculateDiscount(basketItems));
