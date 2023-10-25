@@ -1,11 +1,14 @@
 package modeltests;
 
 import models.Basket;
+import models.Discounts.BuyOneGetOne;
 import models.ShoppingItem;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashMap;
+
+import static junit.framework.TestCase.assertEquals;
 
 public class BuyOneGetOneTest {
     ShoppingItem biscuits;
@@ -22,18 +25,18 @@ public class BuyOneGetOneTest {
 
     @Test
     public void hasAPriorityOf1() {
-        assertEquals(2, buyOneGetOne.getPriority());
+        assertEquals(1, buyOneGetOne.getPriority());
     }
 
     @Test
     public void canGetDiscountedItem(){
-        assertEquals(biscuits, buyOneGetOne.getDiscountedItem());
+        assertEquals(apples, buyOneGetOne.getDiscountedItem());
     }
 
     @Test
     public void canGetDiscount() {
         basket.addItems(apples, 4);
         HashMap<ShoppingItem, Integer>basketItems = basket.getItems();
-        assertEquals(2.99, buyOneGetOne.calculateDiscount(basketItems));
+        assertEquals(2.98, buyOneGetOne.calculateDiscount(basketItems));
     }
 }
