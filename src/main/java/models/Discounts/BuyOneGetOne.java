@@ -31,6 +31,8 @@ public class BuyOneGetOne implements IDiscountable {
         int freeItems = (int)Math.floor(numberOfItems/2);
         double discount = freeItems * discountedItem.getPrice();
         return discount;
-
+    }
+    public double calculateDiscount(double amount){
+        return 0;
     }
 }

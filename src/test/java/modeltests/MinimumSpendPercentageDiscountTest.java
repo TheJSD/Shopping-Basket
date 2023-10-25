@@ -1,6 +1,7 @@
 package modeltests;
 
 import models.Basket;
+import models.Discounts.MinimumSpendPercentageDiscount;
 import models.ShoppingItem;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,27 +22,23 @@ public class MinimumSpendPercentageDiscountTest {
 
     @Test
     public void hasDiscountRate(){
-        assertEquals(0.11, minimumSpendPercentageDiscount.getDiscountRate());
+        assertEquals(0.1, minimumSpendPercentageDiscount.getDiscountRate());
     }
     @Test
     public void hasMinimumSpend(){
-        assertEquals(21, minimumSpendPercentageDiscount.getMinimumSpend());
+        assertEquals(20D, minimumSpendPercentageDiscount.getMinimumSpend());
     }
     @Test
     public void hasAProrityOf2(){
-        assertEquals(1, minimumSpendPercentageDiscount.getPriority());
+        assertEquals(2, minimumSpendPercentageDiscount.getPriority());
     }
     @Test
     public void canCalculateDiscount(){
-        basket.addItems(biscuits, 20);
-        HashMap<ShoppingItem, Integer> basketItems = basket.getItems();
-        assertEquals(3.99, minimumSpendPercentageDiscount.calculateDiscount(basketItems));
+        assertEquals(4.0, minimumSpendPercentageDiscount.calculateDiscount(40));
     }
 
     @Test
     public void CalculateReturns0WhenTotalIsLessThan20(){
-        basket.addItems(biscuits, 10);
-        HashMap<ShoppingItem, Integer> basketItems = basket.getItems();
-        assertEquals(0, minimumSpendPercentageDiscount.calculateDiscount(basketItems));
+        assertEquals(0D, minimumSpendPercentageDiscount.calculateDiscount(19.99));
     }
 }
